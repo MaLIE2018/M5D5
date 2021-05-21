@@ -69,22 +69,6 @@ class AddComment extends Component {
     } catch (error) {}
   };
 
-  deleteComment = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch(
-        join(this.state.url, this.props.match.params.id),
-        {
-          method: "DELETE",
-        }
-      );
-      if (!res.ok) throw "something went wrong";
-      this.props.onNewCommentSubmit(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   render() {
     return (
       <>

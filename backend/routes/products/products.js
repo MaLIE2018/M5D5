@@ -102,14 +102,13 @@ productsRouter.put('/:id', async (req, res, next) => {
         (product) => product._id === req.params.id
       );
       const newProduct = {
-        _id: uniqid(),
+        _id: req.params.id,
         ...req.body,
-        createdAt: new Date(),
         updatedAt: new Date(),
       };
       content[product] = newProduct;
       await writeProducts(content);
-      res.send(newProduct);
+      res.send({id: newProduct._id});
     } else {
       res
         .status(404)
