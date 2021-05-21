@@ -1,0 +1,12 @@
+.navbar {
+  min-height: 10vh;
+}
+
+.navbar a {
+  text-decoration: none;
+}
+
+.navbar a:hover {
+  text-decoration: none;
+}
+/*# sourceMappingURL=pagenav.css.map */

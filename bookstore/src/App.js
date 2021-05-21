@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import PageNavbar from './components/PageNavbar'
+import Footer from './components/Footer'
+import Welcome from './Pages/Welcome'
+import LatestReleases from './Pages/LatestReleases'
+import {Container} from 'react-bootstrap'
+import React from 'react';
+import books from "./data/fantasy.json"
+import {Route,BrowserRouter as Router, Switch, Redirect} from 'react-router-dom'
+import { CreateProducts } from './Pages/CreateProducts';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component{
+  constructor(props){
+    super(props);
+    this.books = books
+  }
+  render() {
+      return (
+        <Router>
+          <Container fluid className='m-0 p-0'>
+          <PageNavbar />
+          {/* <Redirect exact from="/" to="Welcome" /> */}
+          <Switch>
+            <Route path="/Welcome" component={Welcome}/>
+            <Route path="/LatestReleases" render={(props) => (<LatestReleases books={this.books}/>)}/>
+            <Route path={["/backoffice"]} exact component={CreateProducts}/>
+            <Route path={["/backoffice/:id"]} component={CreateProducts}/>
+            
+          </Switch>
+          <Footer/>
+          </Container>
+        </Router>
+      );
+  }
 }
 
 export default App;

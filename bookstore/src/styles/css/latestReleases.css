@@ -1,0 +1,12 @@
+.bookrow {
+  height: 90vh;
+  overflow: scroll;
+}
+
+.card {
+  cursor: pointer;
+}
+
+.bookrow .card-columns {
+  column-count: 6;
+}
