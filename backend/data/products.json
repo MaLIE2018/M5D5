@@ -1,0 +1,50 @@
+[
+  {
+    "asin": "0316438960",
+    "title": "The Last Wish: Introducing the Witcher",
+    "img": "https://images-na.ssl-images-amazon.com/images/I/51eHtkVLL5L.jpg",
+    "price": 9.59,
+    "category": "fantasy",
+    "reviews": [
+      {
+        "_id": "123455",
+        "comment": "A good book but definitely I don't like many parts of the plot",
+        "rate": 3,
+        "asin": "5d318e1a8541744830bef139",
+        "createdAt": "2019-08-01T12:46:45.895Z"
+      }
+    ]
+  },
+  {
+    "asin": "0316389706",
+    "title": "Sword of Destiny (The Witcher)",
+    "img": "https://images-na.ssl-images-amazon.com/images/I/91uxJwnolDL.jpg",
+    "price": 10.39,
+    "category": "fantasy",
+    "reviews": [
+      {
+        "_id": "123455",
+        "comment": "A good book but definitely I don't like many parts of the plot",
+        "rate": 3,
+        "asin": "5d318e1a8541744830bef139",
+        "createdAt": "2019-08-01T12:46:45.895Z"
+      }
+    ]
+  },
+  {
+    "asin": "0786966246",
+    "title": "D&D MORDENKAINEN'S TOME OF FOES (Dungeons & Dragons)",
+    "img": "https://images-na.ssl-images-amazon.com/images/I/8147MOLG%2BoL.jpg",
+    "price": 27.94,
+    "category": "fantasy",
+    "reviews": [
+      {
+        "_id": "123455",
+        "comment": "A good book but definitely I don't like many parts of the plot",
+        "rate": 3,
+        "asin": "5d318e1a8541744830bef139",
+        "createdAt": "2019-08-01T12:46:45.895Z"
+      }
+    ]
+  }
+]
