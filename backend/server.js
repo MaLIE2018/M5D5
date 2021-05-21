@@ -10,6 +10,6 @@ const port = 3001
 app.use(cors())
 app.use(express.json())
 
-
+app.use("/products", productRoutes, fileRoutes)
 
 app.listen(port, () => console.log(`Server at ${port}`))
