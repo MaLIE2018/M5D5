@@ -1,5 +1,5 @@
 import { ListGroup } from "react-bootstrap";
-import SearchBar from "../components/SearchBar";
+import SearchBar from "../SearchBar";
 import { Component } from "react";
 
 class CommentList extends Component {
@@ -28,19 +28,18 @@ class CommentList extends Component {
   render() {
     const filterText = this.state.filterText;
     let comments;
-    {
-      if (filterText !== "") {
-        let filteredComments = this.props.comments.filter(function (comment) {
-          return (
-            comment.comment.toLowerCase().includes(filterText.toLowerCase()) ||
-            comment.author.toLowerCase().includes(filterText.toLowerCase())
-          );
-        });
-        comments = filteredComments;
-      } else {
-        comments = this.props.comments;
-      }
+    if (filterText !== "") {
+      let filteredComments = this.props.comments.filter(function (comment) {
+        return (
+          comment.comment.toLowerCase().includes(filterText.toLowerCase()) ||
+          comment.author.toLowerCase().includes(filterText.toLowerCase())
+        );
+      });
+      comments = filteredComments;
+    } else {
+      comments = this.props.comments;
     }
+
     return this.props.comments.length !== 0 ? (
       <div
         className=''

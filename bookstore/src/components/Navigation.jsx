@@ -1,11 +1,13 @@
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, FormControl, Button } from "react-bootstrap";
 import "../styles/css/pagenavbar.css";
 import { Link } from "react-router-dom";
 
-const PageNavbar = () => {
+const Navigation = () => {
   return (
-    <Navbar bg='light' variant='light'>
-      <Navbar.Brand href='#home'>Navbar</Navbar.Brand>
+    <Navbar bg='light' variant='light' className='fixed-top'>
+      <Navbar.Brand as={Link} to='/welcome'>
+        Bookstore
+      </Navbar.Brand>
       <Nav className='mr-auto'>
         <Nav.Link as={Link} to='/Welcome'>
           Home
@@ -18,8 +20,12 @@ const PageNavbar = () => {
           BackOffice
         </Nav.Link>
       </Nav>
+      <Nav>
+        <FormControl type='text' placeholder='Search' className='mr-sm-2' />
+        <Button variant='outline-success'>Search</Button>
+      </Nav>
     </Navbar>
   );
 };
 
-export default PageNavbar;
+export default Navigation;

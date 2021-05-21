@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import AddComment from "./AddComment";
 import CommentList from "./CommentList";
-import "../styles/css/commentArea.css";
+import "../../styles/css/commentArea.css";
 import { Col, Spinner, Row } from "react-bootstrap";
 import { withRouter } from "react-router";
 
@@ -88,16 +88,14 @@ class CommentArea extends Component {
       );
     } else {
       return (
-        <div className='commentArea overflow-auto my-5'>
-          <Row className='mx-2'>
-            <Col sm={5} md={2} lg={2}>
-              <img
-                src={this.props.currentProduct.imageUrl}
-                alt=''
-                className='img-fluid'
-              />
+        <div
+          className='commentArea overflow-auto sticky-top'
+          style={{ marginTop: "130px" }}>
+          <Row className=''>
+            <Col className='mt-2'>
+              <h3>Comments</h3>
             </Col>
-            <Col sm={7} md={10} lg={10}>
+            <Col sm={7} md={12} lg={12}>
               <h4>{this.props.currentProduct.name}</h4>
               <CommentList
                 comments={this.state.comments}
