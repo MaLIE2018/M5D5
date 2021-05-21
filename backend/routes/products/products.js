@@ -1,7 +1,8 @@
 import express from 'express';
 import uniqid from 'uniqid';
-import createError from 'http-errors';
 import { readProducts, writeProducts } from '../../lib/fs-tools.js';
+import createError from 'http-errors';
+import { productValidation } from './validation.js';
 
 /*
 ****************** products CRUD ********************
@@ -14,38 +15,7 @@ import { readProducts, writeProducts } from '../../lib/fs-tools.js';
 
 const productsRouter = express.Router();
 
-// get all products
-productsRouter.get('/', async (req, res, next) => {
-  try {
-    // 1. read request body
-    const content = await readProducts();
-
-    // 2. send the content as a response
-    res.send(content);
-  } catch (error) {
-    res.send({ message: error.message });
-  }
-});
-
-// get single product
-productsRouter.get('/:id', async (req, res, next) => {
-  try {
-    // 1. read request body
-    const content = await readProducts();
-
-    // 2. filter products for id and send back content as response
-    const product = content.filter((product) => product._id === req.params.id);
-    if (product.length > 0) {
-      res.send(product);
-    } else {
-      res
-        .status(404)
-        .send({ message: `blog with ${req.params.id} id not found!` });
-    }
-  } catch (error) {
-    next(error);
-  }
-});
+// ****************** ROUTES ******************** //
 
 // create/POST product
 productsRouter.post('/', async (req, res, next) => {
@@ -59,7 +29,7 @@ productsRouter.post('/', async (req, res, next) => {
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-    console.log(content, 'djhgdf');
+    // console.log(content, 'djhgdf');
 
     content.push(newProduct);
 
@@ -67,7 +37,78 @@ productsRouter.post('/', async (req, res, next) => {
 
     res.send(newProduct);
   } catch (error) {
-    res.status(500).send({ message: error.message });
+    // res.status(500).send({ message: error.message });
+    next(error);
+  }
+});
+
+// GET all products
+productsRouter.get('/', async (req, res, next) => {
+  try {
+    // 1. read request body
+    const content = await readProducts();
+
+    // 2. send the content as a response
+    res.send(content);
+  } catch (error) {
+    // res.send({ message: error.message });
+    next(error);
+  }
+});
+
+// GET single product
+productsRouter.get('/:id', async (req, res, next) => {
+  try {
+    // 1. read request body
+    const content = await readProducts();
+
+    // 2. filter products for id and send back content as response
+    const product = content.filter((product) => product._id === req.params.id);
+
+    if (product.length > 0) {
+      res.send(product);
+    } else {
+      res
+        .status(404)
+        .send({ message: `blog with ${req.params.id} id not found!` });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+// PUT/update product
+productsRouter.put('/:id', async (req, res, next) => {
+  try {
+    const content = await readProducts();
+    console.log(content);
+    if (content.find((product) => product._id === req.params.id)) {
+      const product = content.findIndex(
+        (product) => product._id === req.params.id
+      );
+      // don't forget carry on previous values
+      const previousProduct = content[product];
+
+      const newProduct = {
+        ...previousProduct,
+        ...req.body,
+        // createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      content[product] = newProduct;
+
+      await writeProducts(content);
+
+      res.send(newProduct);
+    } else {
+      res
+        .status(404)
+        .send({ message: `product with ${req.params.id} id not found!` });
+    }
+  } catch (error) {
+    // res.send(500).send({ message: error.message });
+    next(error);
   }
 });
 
@@ -81,43 +122,15 @@ productsRouter.delete('/:id', async (req, res, next) => {
         (content) => content._id !== req.params.id
       );
       await writeProducts(newProduct);
-      res.send();
+      res.send('Product has been DELETED');
     } else {
       res
         .status(404)
         .send({ message: `product with ${req.params.id} id not found!` });
     }
   } catch (error) {
-    res.send(500).send({ message: error.message });
+    // res.send(500).send({ message: error.message });
+    next(error);
   }
 });
-
-// update/PUT product
-productsRouter.put('/:id', async (req, res, next) => {
-  try {
-    const content = await readProducts();
-
-    if (content.find((product) => product._id === req.params.id)) {
-      const product = content.findIndex(
-        (product) => product._id === req.params.id
-      );
-      const newProduct = {
-        _id: uniqid(),
-        ...req.body,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-      content[product] = newProduct;
-      await writeProducts(content);
-      res.send(newProduct);
-    } else {
-      res
-        .status(404)
-        .send({ message: `product with ${req.params.id} id not found!` });
-    }
-  } catch (error) {
-    res.send(500).send({ message: error.message });
-  }
-});
-
 export default productsRouter;

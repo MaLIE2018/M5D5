@@ -9,7 +9,7 @@ import {
 import filesRouter from './modules/files/fileHandler.js';
 import { getCurrentFolderPath } from './modules/files/fileHandler.js';
 import { dirname, join } from 'path';
-import productRoutes from './routes/products/products.js';
+import productsRoutes from './routes/products/products.js';
 
 const app = express();
 const port = 3001;
@@ -24,7 +24,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/reviews', reviewsRoutes);
-app.use('/products', filesRouter);
+app.use('/products', productsRoutes, filesRouter);
 
 app.use(badRequestErrorHandler);
 app.use(notFoundErrorHandler);
