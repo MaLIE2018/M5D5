@@ -37,16 +37,9 @@ class CommentArea extends Component {
 
   componentDidUpdate = async (prevProps, prevState) => {
     if (prevProps.productId !== this.props.productId) {
-      console.log(
-        "this.props.productId:",
-        this.props.productId,
-        prevProps.productId
-      );
       this.fetchData();
     }
-    if (prevProps.currentProduct !== this.props.currentProduct) {
-      this.fetchData();
-    }
+
     if (prevState.newComment !== this.state.newComment) {
       this.setState({
         newComment: false,
@@ -61,7 +54,7 @@ class CommentArea extends Component {
       this.fetchData();
     } else {
       this.setState((state) => {
-        return { loading: false };
+        return { isLoading: false, newComment: false };
       });
     }
   };
@@ -73,9 +66,8 @@ class CommentArea extends Component {
       );
 
       if (response.ok) {
-        console.log("resOk");
         let data = await response.json();
-        console.log("data:", data);
+
         this.setState((state) => {
           return { comments: data, isLoading: false, newComment: false };
         });
@@ -107,7 +99,10 @@ class CommentArea extends Component {
             </Col>
             <Col sm={7} md={10} lg={10}>
               <h4>{this.props.currentProduct.name}</h4>
-              <CommentList comments={this.state.comments} />
+              <CommentList
+                comments={this.state.comments}
+                onNewCommentSubmit={this.handleNewCommentSubmit}
+              />
               <Row className=''>
                 <Col>
                   <AddComment

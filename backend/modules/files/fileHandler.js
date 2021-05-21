@@ -9,7 +9,7 @@ const imagePath = join(
   dirname(fileURLToPath(import.meta.url)),
   "../../public/img"
 );
-console.log(imagePath);
+
 export const getCurrentFolderPath = (currentFile) =>
   dirname(fileURLToPath(currentFile));
 

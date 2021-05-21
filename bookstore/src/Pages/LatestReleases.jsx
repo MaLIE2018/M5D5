@@ -25,18 +25,20 @@ class LatestReleases extends React.Component {
       if (!res.ok) throw "something went wrong";
       const data = await res.json();
       this.setState((state) => {
-        return { ...state, products: data, loading: false };
+        return { ...state, products: data, loading: false, update: false };
       });
     } catch (err) {
       console.log(err);
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.match.params.id !== this.state.productId) {
-      this.setState((state) => {
-        return { productId: this.props.match.params.id };
-      });
+  componentDidUpdate(prevState) {
+    if (this.props.match.params.hasOwnProperty("id")) {
+      if (this.props.match.params.id !== this.state.productId) {
+        this.setState((state) => {
+          return { productId: this.props.match.params.id };
+        });
+      }
     }
   }
 

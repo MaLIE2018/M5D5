@@ -196,13 +196,19 @@ export class CreateProducts extends Component {
               <button
                 type='button'
                 className='backoffice-delbtn btn btn-danger float-right mx-1'
-                onClick={(e) => this.deleteProduct(e)}>
+                onClick={(e) => {
+                  this.deleteProduct(e);
+                  this.props.history.push("/LatestReleases");
+                }}>
                 <ion-icon name='close-circle-outline' />
               </button>
               <button
                 type='button'
                 className='backoffice-editbtn btn btn-light float-right mx-1'
-                onClick={(e) => this.putProduct(e)}>
+                onClick={(e) => {
+                  this.putProduct(e);
+                  this.props.history.push("/LatestReleases");
+                }}>
                 <ion-icon name='create-outline' />
               </button>
             </form>

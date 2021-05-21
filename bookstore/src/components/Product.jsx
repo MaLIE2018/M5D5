@@ -41,7 +41,7 @@ class Product extends React.Component {
           type='button'
           className='backoffice-editbtn btn btn-light float-right mx-1'
           as={Link}
-          to={`/backoffice/${this.props.product._id}`}>
+          to={`/backoffice/${this.props.productId}`}>
           <CreateOutline
             color={"#00000"}
             title={"creartet"}

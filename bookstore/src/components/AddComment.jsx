@@ -17,23 +17,24 @@ class AddComment extends Component {
     this.props.onNewCommentSubmit(true);
   };
 
-  componentDidUpdate = async (prevProps) => {
-    if (prevProps.newComment !== this.props.newComment) {
-      try {
-        let response = await fetch(this.state.url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(this.props.currComment),
-        });
-        if (response.ok) {
-        }
-      } catch (error) {
-        alert("Something went wrong");
-      }
-    }
-  };
+  // componentDidUpdate = async (prevProps) => {
+  //   if (prevProps.newComment !== this.props.newComment) {
+  //     try {
+  //       let response = await fetch(this.state.url, {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify(this.props.currComment),
+  //       });
+  //       if (response.ok) {
+  //          this.props.onNewCommentSubmit(true);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
 
   putComment = async (e) => {
     e.preventDefault();
@@ -46,6 +47,7 @@ class AddComment extends Component {
         body: JSON.stringify(this.props.newComment),
       });
       if (!res.ok) throw "something went wrong";
+      this.props.onNewCommentSubmit(true);
     } catch (error) {}
   };
 
@@ -63,6 +65,7 @@ class AddComment extends Component {
         }),
       });
       if (!res.ok) throw "something went wrong";
+      this.props.onNewCommentSubmit(true);
     } catch (error) {}
   };
 
@@ -76,6 +79,7 @@ class AddComment extends Component {
         }
       );
       if (!res.ok) throw "something went wrong";
+      this.props.onNewCommentSubmit(true);
     } catch (error) {
       console.log(error);
     }
@@ -125,12 +129,12 @@ class AddComment extends Component {
               </Form.Group>
             </Col>
           </Row>
-          <button
+          {/* <button
             type='button'
             onClick={(e) => this.postComment(e)}
             className='backoffice-editbtn btn btn-light float-right mx-1'>
             <ion-icon name='create-outline' />
-          </button>
+          </button> */}
           <button
             type='button'
             className='btn btn-primary float-right'
