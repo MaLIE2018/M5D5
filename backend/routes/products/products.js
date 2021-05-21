@@ -115,28 +115,6 @@ productsRouter.put('/:id', async (req, res, next) => {
         .status(404)
         .send({ message: `product with ${req.params.id} id not found!` });
     }
-
-    // const posts = readBlogPostJSON();
-    // if (posts.find((post) => post._id === req.params.id)) {
-    //   const requestedPost = posts.findIndex(
-    //     (post) => post._id === req.params.id
-    //   );
-    //   const newPost = {
-    //     _id: req.params.id,
-    //     ...req.body,
-    //     author: {
-    //       name: 'John',
-    //       avatar: 'https://source.unsplash.com/random',
-    //     },
-    //     createdAt: new Date(),
-    //   };
-    //   posts[requestedPost] = newPost;
-    //   writeBlogPostJSON(posts);
-
-    //   res.send(newPost);
-    // } else {
-    //   res.send(`Could not find post with the id of ${req.params.id}`);
-    // }
   } catch (error) {
     res.send(500).send({ message: error.message });
   }
