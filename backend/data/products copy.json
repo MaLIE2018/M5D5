@@ -25,31 +25,11 @@
     "_id": "1hryx36dckoy81gge",
     "name": "put name",
     "description": "nice to meet you",
-    "brand": "iphone",
+    "brand": "iphone 25",
     "imageUrl": "https://drop.ndtv.com/TECH/product_database/images/2152017124957PM_635_nokia_3310.jpeg?downsize=*:420&output-quality=80",
     "price": 250,
     "category": "smartphones",
-    "createdAt": "2021-05-21T12:47:36.875Z",
-    "updatedAt": "2021-05-21T12:47:36.875Z"
-  },
-  {
-    "_id": "h54a8koybfv57",
-    "name": "Iphone X",
-    "description": "a bit geil",
-    "brand": "dfdf",
-    "imageUrl": "https://www.pricepony.com.ph/blog/wp-content/uploads/2020/11/200817-samsung-galaxy-s20-FE-onleaks-01-1-1024x576-1.jpg",
-    "price": "23232332",
-    "createdAt": "2021-05-21T12:45:23.946Z",
-    "updatedAt": "2021-05-21T12:45:23.946Z"
-  },
-  {
-    "_id": "h5ks8koybhpcg",
-    "name": "Iphone X",
-    "description": "fdf",
-    "brand": "Apple",
-    "imageUrl": "https://i-cdn.phonearena.com/images/phones/27731-xlarge/Alcatel-OT-255-2z.jpg",
-    "price": "232323",
-    "createdAt": "2021-05-21T12:46:49.743Z",
-    "updatedAt": "2021-05-21T12:46:49.743Z"
+    "createdAt": "2021-05-21T11:10:12.877Z",
+    "updatedAt": "2021-05-21T11:10:12.877Z"
   }
 ]

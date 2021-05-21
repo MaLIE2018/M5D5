@@ -93,7 +93,6 @@ class CommentArea extends Component {
               <Row className=''>
                 <Col>
                   <AddComment
-                    currBook={this.props.currentProduct}
                     currComment={this.state.currComment}
                     onCommentUpdate={this.handleCommentUpdate}
                     onNewCommentSubmit={this.handleNewCommentSubmit}

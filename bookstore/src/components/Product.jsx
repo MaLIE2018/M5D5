@@ -1,4 +1,4 @@
-import { Card } from "react-bootstrap";
+import { Card, Nav } from "react-bootstrap";
 import React from "react";
 import { formatter } from "./../lib/formatter";
 import { CreateOutline } from "react-ionicons";
@@ -34,7 +34,7 @@ class Product extends React.Component {
           <p>{this.props.product.description} </p>
           <p>${formatter.format(parseFloat(this.props.product.price))} </p>
         </Card.Body>
-        <button
+        <Nav.Link
           type='button'
           className='backoffice-editbtn btn btn-light float-right mx-1'
           as={Link}
@@ -45,7 +45,7 @@ class Product extends React.Component {
             height='25px'
             width='25px'
           />
-        </button>
+        </Nav.Link>
       </Card>
     );
   }
