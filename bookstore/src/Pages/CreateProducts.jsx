@@ -27,6 +27,18 @@ export class CreateProducts extends Component {
     });
   };
 
+  fileUpload = async (id) => {
+    try {
+      const res = await fetch(this.state.url + `${id}/upload`, {
+        method: "POST",
+        body: this.state.formData,
+      });
+      if (!res.ok) throw "something went wrong";
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   postProduct = async (e) => {
     e.preventDefault();
     try {
@@ -37,7 +49,13 @@ export class CreateProducts extends Component {
         },
         body: JSON.stringify(this.state.book),
       });
-      if (!res.ok) throw "something went wrong";
+      if (!res.ok) {
+        throw "something went wrong";
+      } else {
+        let data = await res.json();
+
+        this.fileUpload(data.id);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -65,6 +83,16 @@ export class CreateProducts extends Component {
           "content-type": "application/json",
         },
         body: JSON.stringify(this.state.book),
+      });
+      if (!res.ok) throw "something went wrong";
+    } catch (error) {}
+  };
+
+  deleteProduct = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(this.state.url + this.props.match.params.id, {
+        method: "DELETE",
       });
       if (!res.ok) throw "something went wrong";
     } catch (error) {}
@@ -167,7 +195,8 @@ export class CreateProducts extends Component {
               </button>
               <button
                 type='button'
-                className='backoffice-delbtn btn btn-danger float-right mx-1'>
+                className='backoffice-delbtn btn btn-danger float-right mx-1'
+                onClick={(e) => this.deleteProduct(e)}>
                 <ion-icon name='close-circle-outline' />
               </button>
               <button

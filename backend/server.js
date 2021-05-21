@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import reviewsRoutes from './routes/reviews/reviews.js';
+import reviewsRouter from './routes/reviews/reviews.js';
 import {
   badRequestErrorHandler,
   notFoundErrorHandler,
@@ -16,7 +16,7 @@ const port = 3001;
 
 const publicFolderPath = join(
   getCurrentFolderPath(import.meta.url),
-  '../public'
+  './public'
 );
 
 app.use(express.static(publicFolderPath));
@@ -24,7 +24,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/products', filesRouter, productsRouter);
-
+app.use('/reviews', reviewsRouter);
 app.use(badRequestErrorHandler);
 app.use(notFoundErrorHandler);
 app.use(catchAllErrorHandler);

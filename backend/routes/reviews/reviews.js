@@ -19,11 +19,11 @@ const getReviews = async () =>
 const writeReviews = async (content) =>
   await writeJSON(join(dataFolderPath, 'reviews.json'), content);
 
-const reviewsRoutes = express.Router();
+const reviewsRouter = express.Router();
 
 //---------------ROUTES----------- //
 
-reviewsRoutes.get('/', async (req, res, next) => {
+reviewsRouter.get('/', async (req, res, next) => {
   try {
     const reviews = await getReviews();
     res.send(reviews);
@@ -31,20 +31,17 @@ reviewsRoutes.get('/', async (req, res, next) => {
     next(error);
   }
 });
-reviewsRoutes.get('/:id', async (req, res, next) => {
+reviewsRouter.get('/:id', async (req, res, next) => {
   try {
     const allReviews = await getReviews();
-
-    const reviewWithId = allReviews.find(
-      (review) => review.id === req.params.id
-    );
-    res.send(reviewWithId);
+    const reviewsFromProduct = allReviews.filter((review) => review._id === req.params.id);
+    res.send(reviewsFromProduct);
   } catch (error) {
     console.log(error);
     next(error);
   }
 });
-reviewsRoutes.post('/', reviewValidation, async (req, res, next) => {
+reviewsRouter.post('/',  async (req, res, next) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -63,7 +60,7 @@ reviewsRoutes.post('/', reviewValidation, async (req, res, next) => {
   }
 });
 
-reviewsRoutes.put('/:id', reviewValidation, async (req, res, next) => {
+reviewsRouter.put('/:id', reviewValidation, async (req, res, next) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -87,7 +84,7 @@ reviewsRoutes.put('/:id', reviewValidation, async (req, res, next) => {
   }
 });
 
-reviewsRoutes.delete('/:id', async (req, res, next) => {
+reviewsRouter.delete('/:id', async (req, res, next) => {
   try {
     const allReviews = await getReviews();
     const remainReviews = allReviews.filter(
@@ -100,4 +97,4 @@ reviewsRoutes.delete('/:id', async (req, res, next) => {
   }
 });
 
-export default reviewsRoutes;
+export default reviewsRouter;

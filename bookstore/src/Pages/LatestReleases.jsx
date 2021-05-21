@@ -3,12 +3,14 @@ import "../styles/css/latestReleases.css";
 import React from "react";
 import CommentArea from "../components/CommentArea";
 import Product from "../components/Product";
+import { withRouter } from "react-router-dom";
 
 class LatestReleases extends React.Component {
   state = {
     currentProduct: {},
     products: [],
     loading: true,
+    productId: undefined,
   };
 
   handleClick = (currentProduct) => {
@@ -30,6 +32,14 @@ class LatestReleases extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.id !== this.state.productId) {
+      this.setState((state) => {
+        return { productId: this.props.match.params.id };
+      });
+    }
+  }
+
   componentDidMount() {
     this.getData();
   }
@@ -38,7 +48,6 @@ class LatestReleases extends React.Component {
     if (this.state.loading) {
       return <div>Loading</div>;
     } else {
-      console.log(this.state.products);
       return (
         <Row className='bookrow mt-2 ml-2'>
           <Col md={7}>
@@ -48,6 +57,7 @@ class LatestReleases extends React.Component {
                   <Product
                     key={product._id}
                     product={product}
+                    productId={product._id}
                     onDetailClick={this.handleClick}
                   />
                 </Col>
@@ -55,7 +65,12 @@ class LatestReleases extends React.Component {
             </Row>
           </Col>
           <Col md={5}>
-            {<CommentArea currentProduct={this.state.currentProduct} />}
+            {
+              <CommentArea
+                currentProduct={this.state.currentProduct}
+                productId={this.state.productId}
+              />
+            }
           </Col>
         </Row>
       );
@@ -63,4 +78,4 @@ class LatestReleases extends React.Component {
   }
 }
 
-export default LatestReleases;
+export default withRouter(LatestReleases);

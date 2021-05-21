@@ -2,7 +2,7 @@ import express from "express";
 import multer from "multer";
 import fs from "fs-extra";
 import { fileURLToPath } from "url";
-import { dirname, join } from "path";
+import { dirname, join, extname } from "path";
 const { readJSON, writeJSON, writeFile } = fs;
 
 const imagePath = join(
@@ -12,6 +12,7 @@ const imagePath = join(
 console.log(imagePath);
 export const getCurrentFolderPath = (currentFile) =>
   dirname(fileURLToPath(currentFile));
+
 const publicFolderPath = join(
   getCurrentFolderPath(import.meta.url),
   "../public"
@@ -33,34 +34,19 @@ const writeProducts = async (content) =>
 
 const filesRouter = express.Router();
 
-filesRouter.post(
-  "/:id/upload",
-  multer().single("img"),
-  async (req, res, next) => {
+filesRouter.post("/:id/upload",multer().single("cover"),async (req, res, next) => {
     try {
-      console.log(req.file);
-      //   await writeImage(req.file.originalname, req.file.buffer);
-      console.log(imagePath);
-      console.log(publicFolderPath);
-      const link = `http://localhost:3001/img/${req.file.originalname}`;
-      //   res.send(req.file.originalname);
-
-      // console.log(req.body);
-
-      const newProduct = {
-        ...req.body,
-        img: link,
-        createdAt: new Date(),
-        // _id: uniqid(),
-      };
-      console.log(newProduct);
-
+      await writeImage(req.file.originalname, req.file.buffer)
       const Products = await getProducts();
-      Products.push(newProduct);
-      console.log(Products);
-
-      await writeProducts(Products);
-      res.status(201).send(newProduct);
+      const link = `http://localhost:3001/img/${req.file.originalname}`;
+      let updatedProducts = Products.map((product) => {
+        if(product._id === req.params.id){
+          product.imageUrl = link
+        }
+        return product
+        })
+      await writeProducts(updatedProducts);
+      res.status(201).send();
     } catch (error) {
       next(error);
     }

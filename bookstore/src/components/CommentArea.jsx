@@ -3,6 +3,7 @@ import AddComment from "./AddComment";
 import CommentList from "./CommentList";
 import "../styles/css/commentArea.css";
 import { Col, Spinner, Row } from "react-bootstrap";
+import { withRouter } from "react-router";
 
 class CommentArea extends Component {
   state = {
@@ -35,6 +36,14 @@ class CommentArea extends Component {
   };
 
   componentDidUpdate = async (prevProps, prevState) => {
+    if (prevProps.productId !== this.props.productId) {
+      console.log(
+        "this.props.productId:",
+        this.props.productId,
+        prevProps.productId
+      );
+      this.fetchData();
+    }
     if (prevProps.currentProduct !== this.props.currentProduct) {
       this.fetchData();
     }
@@ -48,16 +57,25 @@ class CommentArea extends Component {
   };
 
   componentDidMount = async () => {
-    this.fetchData();
+    if (this.props.match.params.id) {
+      this.fetchData();
+    } else {
+      this.setState((state) => {
+        return { loading: false };
+      });
+    }
   };
 
   fetchData = async () => {
     try {
       let response = await fetch(
-        `http://localhost:3001/reviews/${this.props.currentProduct._id}`
+        `http://localhost:3001/reviews/${this.props.productId}`
       );
+
       if (response.ok) {
+        console.log("resOk");
         let data = await response.json();
+        console.log("data:", data);
         this.setState((state) => {
           return { comments: data, isLoading: false, newComment: false };
         });
@@ -97,6 +115,7 @@ class CommentArea extends Component {
                     onCommentUpdate={this.handleCommentUpdate}
                     onNewCommentSubmit={this.handleNewCommentSubmit}
                     newComment={this.state.newComment}
+                    productId={this.props.productId}
                   />
                 </Col>
               </Row>
@@ -108,4 +127,4 @@ class CommentArea extends Component {
   }
 }
 
-export default CommentArea;
+export default withRouter(CommentArea);

@@ -2,7 +2,7 @@ import { Card, Nav } from "react-bootstrap";
 import React from "react";
 import { formatter } from "./../lib/formatter";
 import { CreateOutline } from "react-ionicons";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 class Product extends React.Component {
   constructor(props) {
     super(props);
@@ -19,7 +19,8 @@ class Product extends React.Component {
     selected: false,
   };
 
-  handleOpenCommentsClick = () => {
+  handleOpenCommentsClick = (e) => {
+    e.preventDefault();
     this.props.onDetailClick(this.props.product);
   };
 
@@ -27,7 +28,9 @@ class Product extends React.Component {
     return (
       <Card
         style={this.state.selected ? this.STYLE.selected : {}}
-        onClick={this.handleOpenCommentsClick}>
+        // onClick={(e) => this.handleOpenCommentsClick(e)}
+        as={Link}
+        to={`/LatestReleases/${this.props.productId}`}>
         <Card.Img variant='top' src={this.props.product.imageUrl} />
         <Card.Body>
           <Card.Title>{this.props.product.name}</Card.Title>
@@ -51,4 +54,4 @@ class Product extends React.Component {
   }
 }
 
-export default Product;
+export default withRouter(Product);
