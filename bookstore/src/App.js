@@ -21,7 +21,8 @@ class App extends React.Component{
           {/* <Redirect exact from="/" to="Welcome" /> */}
           <Switch>
             <Route path="/Welcome" component={Welcome}/>
-            <Route path="/LatestReleases" render={(props) => (<LatestReleases books={this.books}/>)}/>
+            <Route path="/LatestReleases" exact render={(props) => (<LatestReleases books={this.books}/>)}/>
+            <Route path="/LatestReleases/:id" render={(props) => (<LatestReleases books={this.books}/>)}/>
             <Route path={["/backoffice"]} exact component={CreateProducts}/>
             <Route path={["/backoffice/:id"]} component={CreateProducts}/>
             

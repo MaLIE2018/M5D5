@@ -1,9 +1,11 @@
 import { Form, Row, Col, Button, Alert } from "react-bootstrap";
 import { Component } from "react";
+import { join } from "path";
 
 class AddComment extends Component {
   state = {
     saveSuccess: false,
+    url: "http://localhost:3001/reviews",
   };
 
   handleCommentUpdate = (e) => {
@@ -17,9 +19,8 @@ class AddComment extends Component {
 
   componentDidUpdate = async (prevProps) => {
     if (prevProps.newComment !== this.props.newComment) {
-      console.log("addComment CDU");
       try {
-        let response = await fetch(`http://localhost:3001/reviews`, {
+        let response = await fetch(this.state.url, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -31,6 +32,52 @@ class AddComment extends Component {
       } catch (error) {
         alert("Something went wrong");
       }
+    }
+  };
+
+  putComment = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(this.state.url + this.props.productId, {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(this.props.newComment),
+      });
+      if (!res.ok) throw "something went wrong";
+    } catch (error) {}
+  };
+
+  postComment = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(this.state.url, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          ...this.props.currComment,
+          _id: this.props.productId,
+        }),
+      });
+      if (!res.ok) throw "something went wrong";
+    } catch (error) {}
+  };
+
+  deleteComment = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(
+        join(this.state.url, this.props.match.params.id),
+        {
+          method: "DELETE",
+        }
+      );
+      if (!res.ok) throw "something went wrong";
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -78,9 +125,20 @@ class AddComment extends Component {
               </Form.Group>
             </Col>
           </Row>
-          <Button variant='primary' type='submit'>
-            Submit
-          </Button>
+          <button
+            type='button'
+            onClick={(e) => this.postComment(e)}
+            className='backoffice-editbtn btn btn-light float-right mx-1'>
+            <ion-icon name='create-outline' />
+          </button>
+          <button
+            type='button'
+            className='btn btn-primary float-right'
+            onClick={(e) => {
+              this.postComment(e);
+            }}>
+            <ion-icon name='add-circle-outline' />
+          </button>
         </Form>
       </>
     );

@@ -6,7 +6,7 @@ export class CreateProducts extends Component {
   state = {
     formData: [],
     book: {},
-    url: "http://localhost:3001/products",
+    url: "http://localhost:3001/products/",
     loading: true,
   };
 
@@ -27,6 +27,18 @@ export class CreateProducts extends Component {
     });
   };
 
+  fileUpload = async (id) => {
+    try {
+      const res = await fetch(this.state.url + `${id}/upload`, {
+        method: "POST",
+        body: this.state.formData,
+      });
+      if (!res.ok) throw "something went wrong";
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   postProduct = async (e) => {
     e.preventDefault();
     try {
@@ -37,7 +49,13 @@ export class CreateProducts extends Component {
         },
         body: JSON.stringify(this.state.book),
       });
-      if (!res.ok) throw "something went wrong";
+      if (!res.ok) {
+        throw "something went wrong";
+      } else {
+        let data = await res.json();
+
+        this.fileUpload(data.id);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -45,11 +63,11 @@ export class CreateProducts extends Component {
 
   getProduct = async () => {
     try {
-      const res = await fetch(join(this.state.url, this.props.match.params.id));
+      const res = await fetch(this.state.url + this.props.match.params.id);
       if (!res.ok) throw "something went wrong";
       const data = await res.json();
       this.setState((state) => {
-        return { book: data, loading: false };
+        return { book: data[0], loading: false };
       });
     } catch (error) {
       console.log(error);
@@ -59,16 +77,23 @@ export class CreateProducts extends Component {
   putProduct = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(
-        join(this.state.url, this.props.match.params.id),
-        {
-          method: "PUT",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(this.state.book),
-        }
-      );
+      const res = await fetch(this.state.url + this.props.match.params.id, {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(this.state.book),
+      });
+      if (!res.ok) throw "something went wrong";
+    } catch (error) {}
+  };
+
+  deleteProduct = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(this.state.url + this.props.match.params.id, {
+        method: "DELETE",
+      });
       if (!res.ok) throw "something went wrong";
     } catch (error) {}
   };
@@ -76,11 +101,15 @@ export class CreateProducts extends Component {
   componentDidMount() {
     if (this.props.match.params.id) {
       this.getProduct();
+    } else {
+      this.setState((state) => {
+        return { loading: false };
+      });
     }
   }
 
   render() {
-    if (!this.state.loading && this.props.match?.params?.id) {
+    if (this.state.loading) {
       return <div>loading</div>;
     } else {
       return (
@@ -155,18 +184,25 @@ export class CreateProducts extends Component {
                   onChange={(e) => this.handleFileChange(e)}
                 />
               </div>
-              <button type='submit' className='btn btn-primary float-right'>
+              <button
+                type='button'
+                className='btn btn-primary float-right'
+                onClick={(e) => {
+                  this.postProduct(e);
+                  this.props.history.push("/LatestReleases");
+                }}>
                 <ion-icon name='add-circle-outline' />
               </button>
               <button
                 type='button'
-                className='backoffice-delbtn btn btn-danger float-right mx-1'>
+                className='backoffice-delbtn btn btn-danger float-right mx-1'
+                onClick={(e) => this.deleteProduct(e)}>
                 <ion-icon name='close-circle-outline' />
               </button>
               <button
                 type='button'
-                onClick={(e) => this.putProduct(e)}
-                className='backoffice-editbtn btn btn-light float-right mx-1'>
+                className='backoffice-editbtn btn btn-light float-right mx-1'
+                onClick={(e) => this.putProduct(e)}>
                 <ion-icon name='create-outline' />
               </button>
             </form>

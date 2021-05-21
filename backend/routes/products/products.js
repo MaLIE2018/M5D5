@@ -65,7 +65,7 @@ productsRouter.post('/', async (req, res, next) => {
 
     await writeProducts(content);
 
-    res.send(newProduct);
+    res.status(200).send({id:newProduct._id});
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
