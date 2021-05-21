@@ -19,6 +19,7 @@ class CommentList extends Component {
         method: "DELETE",
       });
       if (!res.ok) throw "something went wrong";
+      this.props.onNewCommentSubmit(true);
     } catch (error) {
       console.log(error);
     }

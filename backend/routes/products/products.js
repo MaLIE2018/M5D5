@@ -59,7 +59,7 @@ productsRouter.post('/', async (req, res, next) => {
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-    console.log(content, 'djhgdf');
+    
 
     content.push(newProduct);
 
