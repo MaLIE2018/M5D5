@@ -1,7 +1,7 @@
-import { Row, CardColumns, Col, Container } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import "../styles/css/latestReleases.css";
 import React from "react";
-import CommentArea from "../components/CommentArea";
+import CommentArea from "../components/comments/CommentArea";
 import Product from "../components/Product";
 import { withRouter } from "react-router-dom";
 
@@ -51,11 +51,13 @@ class LatestReleases extends React.Component {
       return <div>Loading</div>;
     } else {
       return (
-        <Row className='bookrow mt-2 ml-2'>
+        <Row
+          className='bookrow ml-2'
+          style={{ marginTop: "10vh", marginBottom: "18vh", overflow: "auto" }}>
           <Col md={7}>
             <Row>
               {this.state.products.map((product) => (
-                <Col>
+                <Col md={3} lg={4} className='mt-3'>
                   <Product
                     key={product._id}
                     product={product}

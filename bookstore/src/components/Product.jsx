@@ -28,14 +28,17 @@ class Product extends React.Component {
     return (
       <Card
         style={this.state.selected ? this.STYLE.selected : {}}
-        // onClick={(e) => this.handleOpenCommentsClick(e)}
         as={Link}
         to={`/LatestReleases/${this.props.productId}`}>
-        <Card.Img variant='top' src={this.props.product.imageUrl} />
+        <Card.Img
+          variant='top'
+          src={this.props.product.imageUrl}
+          className='img-fluid'
+        />
         <Card.Body>
           <Card.Title>{this.props.product.name}</Card.Title>
           <p>{this.props.product.description} </p>
-          <p>${formatter.format(parseFloat(this.props.product.price))} </p>
+          <p>{formatter.format(parseFloat(this.props.product.price))} </p>
         </Card.Body>
         <Nav.Link
           type='button'
