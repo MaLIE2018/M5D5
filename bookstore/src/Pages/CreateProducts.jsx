@@ -84,7 +84,14 @@ export class CreateProducts extends Component {
         },
         body: JSON.stringify(this.state.book),
       });
-      if (!res.ok) throw "something went wrong";
+      if (!res.ok) {
+        throw "something went wrong";
+      } else {
+        if (this.state.formData.length > 0) {
+          let data = await res.json();
+          this.fileUpload(data.id);
+        }
+      }
     } catch (error) {}
   };
 
@@ -184,33 +191,39 @@ export class CreateProducts extends Component {
                   onChange={(e) => this.handleFileChange(e)}
                 />
               </div>
-              <button
-                type='button'
-                className='btn btn-primary float-right'
-                onClick={(e) => {
-                  this.postProduct(e);
-                  this.props.history.push("/LatestReleases");
-                }}>
-                <ion-icon name='add-circle-outline' />
-              </button>
-              <button
-                type='button'
-                className='backoffice-delbtn btn btn-danger float-right mx-1'
-                onClick={(e) => {
-                  this.deleteProduct(e);
-                  this.props.history.push("/LatestReleases");
-                }}>
-                <ion-icon name='close-circle-outline' />
-              </button>
-              <button
-                type='button'
-                className='backoffice-editbtn btn btn-light float-right mx-1'
-                onClick={(e) => {
-                  this.putProduct(e);
-                  this.props.history.push("/LatestReleases");
-                }}>
-                <ion-icon name='create-outline' />
-              </button>
+              {!this.props.match.params.hasOwnProperty("id") && (
+                <button
+                  type='button'
+                  className='btn btn-primary float-right'
+                  onClick={(e) => {
+                    this.postProduct(e);
+                    this.props.history.push("/LatestReleases");
+                  }}>
+                  <ion-icon name='add-circle-outline' />
+                </button>
+              )}
+              {this.props.match.params.hasOwnProperty("id") && (
+                <button
+                  type='button'
+                  className='backoffice-delbtn btn btn-danger float-right mx-1'
+                  onClick={(e) => {
+                    this.deleteProduct(e);
+                    this.props.history.push("/LatestReleases");
+                  }}>
+                  <ion-icon name='close-circle-outline' />
+                </button>
+              )}
+              {this.props.match.params.hasOwnProperty("id") && (
+                <button
+                  type='button'
+                  className='backoffice-editbtn btn btn-light float-right mx-1'
+                  onClick={(e) => {
+                    this.putProduct(e);
+                    this.props.history.push("/LatestReleases");
+                  }}>
+                  <ion-icon name='create-outline' title='edit' />
+                </button>
+              )}
             </form>
           </div>
         </div>
