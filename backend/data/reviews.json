@@ -1,0 +1,24 @@
+[
+  {
+    "asin": "0316438960",
+    "reviews": [
+      {
+        "_id": "123455",
+        "comment": "A good book but definitely I don't like many parts of the plot",
+        "rate": 3,
+        "createdAt": "2019-08-01T12:46:45.895Z"
+      }
+    ]
+  },
+  {
+    "asin": "0316389706",
+    "reviews": [
+      {
+        "_id": "123455",
+        "comment": "A good book but definitely I don't like many parts of the plot",
+        "rate": 3,
+        "createdAt": "2019-08-01T12:46:45.895Z"
+      }
+    ]
+  }
+]
