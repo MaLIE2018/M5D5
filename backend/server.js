@@ -8,11 +8,12 @@ import {
 } from './routes/errorsHandler.js';
 import filesRouter from './modules/files/fileHandler.js';
 import { getCurrentFolderPath } from './modules/files/fileHandler.js';
-import { dirname, join } from 'path';
+import { join } from 'path';
 import productsRouter from './routes/products/products.js';
+import listEndpoints from "express-list-endpoints"
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001
 
 const publicFolderPath = join(
   getCurrentFolderPath(import.meta.url),
@@ -25,9 +26,12 @@ app.use(express.json());
 
 app.use('/products', filesRouter, productsRouter);
 app.use('/reviews', reviewsRouter);
+
 app.use(badRequestErrorHandler);
 app.use(notFoundErrorHandler);
 app.use(catchAllErrorHandler);
+
+console.table(listEndpoints(app))
 
 app.listen(port, () => console.log(`Server at ${port}`));
 app.on('error', (error) => console.log(`Server is not running: ${error}`));
